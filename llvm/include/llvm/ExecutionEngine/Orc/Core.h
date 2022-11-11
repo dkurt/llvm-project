@@ -120,9 +120,9 @@ using SymbolDependenceMap = DenseMap<JITDylib *, SymbolNameSet>;
 
 /// Lookup flags that apply to each dylib in the search order for a lookup.
 ///
-/// If MatchHiddenSymbolsOnly is used (the default) for a given dylib, then
+/// If MatchExportedSymbolsOnly is used (the default) for a given dylib, then
 /// only symbols in that Dylib's interface will be searched. If
-/// MatchHiddenSymbols is used then symbols with hidden visibility will match
+/// MatchAllSymbols is used then symbols with hidden visibility will match
 /// as well.
 enum class JITDylibLookupFlags { MatchExportedSymbolsOnly, MatchAllSymbols };
 
