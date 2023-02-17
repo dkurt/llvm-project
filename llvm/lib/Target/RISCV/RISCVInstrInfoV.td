@@ -986,10 +986,6 @@ def VSETVL : RVInstSetVL<(outs GPR:$rd), (ins GPR:$rs1, GPR:$rs2),
 foreach eew = [8, 16, 32] in {
   defvar w = !cast<RISCVWidth>("LSWidth" # eew);
 
-  // Vector Unit-Stride Instructions
-  def VLE#eew#_V : VUnitStrideLoad<w, "vle"#eew#".v">, VLESched<UpperBoundLMUL>;
-  def VSE#eew#_V  : VUnitStrideStore<w,  "vse"#eew#".v">, VSESched<UpperBoundLMUL>;
-
   // Vector Unit-Stride Fault-only-First Loads
   def VLE#eew#FF_V : VUnitStrideLoadFF<w,  "vle"#eew#"ff.v">, VLFSched<UpperBoundLMUL>;
 
@@ -997,6 +993,14 @@ foreach eew = [8, 16, 32] in {
   def VLSE#eew#_V  : VStridedLoad<w,  "vlse"#eew#".v">, VLSSched<eew, UpperBoundLMUL>;
   def VSSE#eew#_V  : VStridedStore<w,  "vsse"#eew#".v">, VSSSched<eew, UpperBoundLMUL>;
 }
+
+// Vector Unit-Stride Instructions
+def VLE8_V : VUnitStrideLoad<LSWidth8, "vlbu.v">, VLESched<UpperBoundLMUL>;
+def VSE8_V  : VUnitStrideStore<LSWidth8,  "vsb.v">, VSESched<UpperBoundLMUL>;
+def VLE16_V : VUnitStrideLoad<LSWidth16, "vlhu.v">, VLESched<UpperBoundLMUL>;
+def VSE16_V  : VUnitStrideStore<LSWidth16,  "vsh.v">, VSESched<UpperBoundLMUL>;
+def VLE32_V : VUnitStrideLoad<LSWidth32, "vlwu.v">, VLESched<UpperBoundLMUL>;
+def VSE32_V  : VUnitStrideStore<LSWidth32,  "vsw.v">, VSESched<UpperBoundLMUL>;
 
 defm "" : VIndexLoadStore<[8, 16, 32]>;
 } // Predicates = [HasVInstructions]
@@ -1141,7 +1145,7 @@ defm VSRA_V : VSHT_IV_V_X_I<"vsra", 0b101001, uimm5>;
 // vector register group (specified by vs2). The destination vector register
 // group cannot overlap the mask register if used, unless LMUL=1.
 let Constraints = "@earlyclobber $vd" in {
-defm VNSRL_W : VNSHT_IV_V_X_I<"vnsrl", 0b101100, uimm5, "w">;
+defm VNSRL_W : VNSHT_IV_V_X_I<"vnsrl", 0b101100, uimm5, "v">;
 defm VNSRA_W : VNSHT_IV_V_X_I<"vnsra", 0b101101, uimm5, "w">;
 } // Constraints = "@earlyclobber $vd"
 

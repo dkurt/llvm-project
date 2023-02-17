@@ -176,15 +176,15 @@ void RISCVVType::printVType(unsigned VType, raw_ostream &OS) {
     OS << ", m";
   OS << LMul;
 
-  if (isTailAgnostic(VType))
-    OS << ", ta";
-  else
-    OS << ", tu";
+  // if (isTailAgnostic(VType))
+  //   OS << ", ta";
+  // else
+  //   OS << ", tu";
 
-  if (isMaskAgnostic(VType))
-    OS << ", ma";
-  else
-    OS << ", mu";
+  // if (isMaskAgnostic(VType))
+  //   OS << ", ma";
+  // else
+  //   OS << ", mu";
 }
 
 unsigned RISCVVType::getSEWLMULRatio(unsigned SEW, RISCVII::VLMUL VLMul) {

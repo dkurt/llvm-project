@@ -989,8 +989,7 @@ std::string RISCVISAInfo::toString() const {
     Arch << LS << ExtName;
     Arch << ExtInfo.MajorVersion << "p" << ExtInfo.MinorVersion;
   }
-
-  return Arch.str();
+  return "rv64gcv0p7";
 }
 
 std::vector<std::string> RISCVISAInfo::toFeatureVector() const {
